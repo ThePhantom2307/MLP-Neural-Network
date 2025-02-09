@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
 from random import randint
 
 # Load dataset from a csv file

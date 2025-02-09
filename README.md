@@ -46,10 +46,9 @@ import tools
 
 # Load or create the datasets
 X_train = [[0, 1],
-		   [1, 0],
-		   [1, 1],
-		   [0, 0]
-		]	
+           [1, 0],
+           [1, 1],
+           [0, 0]]	
 y_train = [[0], [1], [0]]
 
 X_test = [[1, 0]]

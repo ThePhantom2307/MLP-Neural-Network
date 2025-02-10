@@ -1,6 +1,7 @@
 import numpy as np
 import json
 from NeuralNetworkMLP.Layer import Layer
+from NeuralNetworkMLP.Plot import errorPlotOverEpochs
 
 TANH = "tanh"
 RELU = "relu"
@@ -178,7 +179,7 @@ class NeuralNetwork:
             layer.weights -= self.learningRate * activations[i].T.dot(deltas[i])
             layer.biases -= self.learningRate * np.sum(deltas[i], axis=0, keepdims=True)
 
-    def train(self, trainingData, trainingLabels, useThreshold=False):
+    def train(self, trainingData, trainingLabels, useThreshold=False, plotErrorsVsEpochs=False):
         """
         Train the network using mini-batch gradient descent and backpropagation.
 
@@ -186,6 +187,7 @@ class NeuralNetwork:
             trainingData (np.array): Training input data.
             trainingLabels (np.array): Corresponding expected outputs.
             useThreshold (bool, optional): Stop training early if error falls below threshold.
+            plotErrorsVsEpochs (bool, optional): plot a line chart of errors vs epochs.
 
         Example:
             >>> import numpy as np
@@ -194,6 +196,7 @@ class NeuralNetwork:
             >>> trainingLabels = np.array([[0], [1], [1], [0]])
             >>> nn.train(trainingData, trainingLabels)
         """
+        allErrors = []
         numberSamples = trainingData.shape[0]
         for epoch in range(self.epochs):
             indices = np.arange(numberSamples)
@@ -219,11 +222,15 @@ class NeuralNetwork:
 
             averageLoss = totalEpochLoss / numberBatches
             print(f"Epoch {epoch+1}/{self.epochs} - Error: {averageLoss:.6f}")
+            
+            allErrors.append(averageLoss)
 
             if useThreshold and averageLoss < self.threshold:
                 print(f"Average error {averageLoss:.6f} is below threshold {self.threshold}. Stopping training.")
                 break
-
+        
+        if (plotErrorsVsEpochs):
+            errorPlotOverEpochs(allErrors)
         print("Training completed.")
 
     def evaluation(self, testingData, testingLabels):

@@ -16,12 +16,14 @@ MLP Neural Network is a lightweight Python library for building and training Mul
 * Python 3.x is required.
 * NumPy library is required.
 * Pandas library is required.
+* Matplotlib library is required.
 * Json (built-in) library is required.
 
 Install NumPy python library by using the below.
 ```
 pip install numpy
 pip install pandas
+pip install matplotlib
 ```
 
 ## Installation

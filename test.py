@@ -46,6 +46,9 @@ def main():
     neuralNetwork.setThreshold(1e-6)
     
     # Training the neural network with the xTrain and yTrain datasets
+    # You can add two optional parameters in this method
+    # useThreshold: If true, then the neural network stops training when epoch error is less than threshold
+    # plotErrorsVsEpochs: If true, then after the training completion a plot of errors vs epochs is saved with name "error_plot.png"
     print("\nTraining the neural network...")
     neuralNetwork.train(xTrain, yTrain)
     

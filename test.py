@@ -27,6 +27,10 @@ def main():
     neural_network.train(x_train, y_train)
     
     neural_network.evaluation(x_test, y_test)
+
+    neural_network.save_model("test.json")
+
+    neural_network = nn.NeuralNetwork(model_file="test.json")
     
     print("\nNow you can enter flower measurements to get a predicted probability.")
     print("Enter 4 comma-separated values corresponding to:")

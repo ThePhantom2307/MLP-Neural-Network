@@ -47,8 +47,6 @@ class NeuralNetwork:
         self.output_layer_neurons = output_layer_neurons
         self.activation_functions = activation_functions
 
-        self.check_initialization(input_layer_neurons, hidden_layers_neurons, output_layer_neurons, model_file, activation_functions)
-
         self.epochs = 500
         self.batch_size = 32
         self.learning_rate = 0.0001
@@ -59,8 +57,10 @@ class NeuralNetwork:
 
         if model_file:
             self.load_model(model_file)
+            self.check_initialization(input_layer_neurons, hidden_layers_neurons, output_layer_neurons, model_file, activation_functions)
         else:
             layers_neurons_size = self.hidden_layers_neurons + [self.output_layer_neurons]
+            self.check_initialization(input_layer_neurons, hidden_layers_neurons, output_layer_neurons, model_file, activation_functions)
             self.setup_weights_and_biases(layers_neurons_size)
 
     def check_initialization(self, input_layer_neurons, hidden_layers_neurons, output_layer_neurons, model_file, activation_functions):
@@ -86,8 +86,6 @@ class NeuralNetwork:
             >>> # This will raise a ValueError if activation_functions length does not match hidden layers + output.
             >>> nn = NeuralNetwork(2, [3, 4], 1, activation_functions=[RELU, SIGMOID])
         """
-        if model_file is not None:
-            return
 
         if all(param is None for param in [input_layer_neurons, hidden_layers_neurons, output_layer_neurons, model_file, activation_functions]):
             raise ValueError(
@@ -102,7 +100,7 @@ class NeuralNetwork:
             )
 
         expected_activations = len(self.hidden_layers_neurons) + 1
-        if activation_functions is None or len(activation_functions) != expected_activations:
+        if self.activation_functions is None or len(self.activation_functions) != expected_activations:
             received = 0 if activation_functions is None else len(activation_functions)
             raise ValueError(
                 f"Initialization Error: Expected {expected_activations} activation function(s) (one for each hidden layer and one for the output layer), but received {received}."

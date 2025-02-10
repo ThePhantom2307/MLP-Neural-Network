@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="NeuralNetworkMLP",
-    version="1.0.1",
+    version="1.0.4",
     author="Panagiotis Trypos",
     author_email="panagiotis.trypos23@gmail.com",
     description="A class that implements an MLP neural network",

@@ -21,10 +21,10 @@ def main():
     neural_network.set_epochs(1000)
     neural_network.set_learning_rate(0.001)
     neural_network.set_batch_size(16)
-    neural_network.set_threshold(1e-6)
+    neural_network.set_threshold(1e-3)
     
     print("\nTraining the neural network...")
-    neural_network.train(x_train, y_train)
+    neural_network.train(x_train, y_train, use_threshold=True)
     
     neural_network.evaluation(x_test, y_test)
 

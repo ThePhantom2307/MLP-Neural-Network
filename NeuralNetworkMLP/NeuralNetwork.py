@@ -207,7 +207,7 @@ class NeuralNetwork:
         """
         self.threshold = threshold
 
-    def train(self, training_data, training_labels):
+    def train(self, training_data, training_labels, use_threshold=False):
         """
         Train the neural network using the provided training data and labels.
 
@@ -216,6 +216,8 @@ class NeuralNetwork:
         Args:
             training_data (np.array): The input data for training.
             training_labels (np.array): The expected output for each training example.
+            use_threshold (boolean): If true, training will stop early when the average epoch error
+                    is less than the threshold. Defaults to False
 
         Example:
             >>> import numpy as np
@@ -252,6 +254,10 @@ class NeuralNetwork:
 
             average_loss = total_epoch_loss / number_batches
             print(f"Epoch {epoch+1}/{self.epochs} - Error: {average_loss:.6f}")
+
+            if (use_threshold and average_loss < self.threshold):
+                print(f"The error \"{average_loss}\" is less than the threshold \"{self.threshold}\".")
+                break
 
         print("Training completed.")
 

@@ -47,42 +47,40 @@ python test.py
 You can incorporate the MLP Neural Network library into your own projects. Below is a short example to illustrate how to use the library:
 
 ```python
-# Import the neural network class
 import NeuralNetworkMLP as nn
 import numpy as np
 
 # Load or create the datasets
-X_train = np.array([[0, 1],
-           [1, 0],
-           [1, 1],
-           [0, 0]])
+xTrain = np.array([[0, 1],
+                   [1, 0],
+                   [1, 1],
+                   [0, 0]])
 
-y_train = np.array([[1], [1], [0], [0]])
+yTrain = np.array([[1], [1], [0], [0]])
 
-X_test = np.array([[1, 0]])
+xTest = np.array([[1, 0]])
 
-# Define your network architecture: for example, input layer of size 2,
-# one hidden layer with 10 neurons, and output layer of size 1.
-neural_network = nn.NeuralNetwork(
-        input_layer_neurons=2,
-        hidden_layers_neurons=[10],
-        output_layer_neurons=1,
-        activation_functions=[nn.RELU, nn.SIGMOID]
-    )
+# Define your network architecture: for example, input layer of size 2, one hidden layer with 10 neurons, and output layer of size 1.
+neuralNetwork = nn.NeuralNetwork(
+    inputLayerNeurons=2,
+    hiddenLayersNeurons=[10],
+    outputLayerNeurons=1,
+    activationFunctions=[nn.RELU, nn.SIGMOID]
+)
 
-# Train the model on your training data (X_train and y_train should be defined appropriately)
-neural_network.train(X_train, y_train)
+# Train the model on your training data
+neuralNetwork.train(xTrain, yTrain)
 
 # Predict on new data
-predictions = neural_network.predict(X_test)
+predictions = neuralNetwork.predict(xTest)
 
 # Save the model
-neural_network.save_model("NeuralNetworkModel.json")
+neuralNetwork.saveModel("NeuralNetworkModel.json")
 
 # Load the model
-neural_network.load_model("NeuralNetworkModel.json")
+neuralNetwork.loadModel("NeuralNetworkModel.json")
 ```
-For more detailed usage, refer to the test.py file, which provides a complete example.
+For more detailed usage, refer to the "test.py" file, which provides a complete example.
 
 ## Contributing
 Contributions, suggestions, and bug reports are welcome! If you’d like to contribute, please fork the repository and create a pull request. Alternatively, feel free to open an issue to discuss improvements.

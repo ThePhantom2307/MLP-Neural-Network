@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from random import randint
 
-def load_data_from_text_file(file_path, number_of_data=-1, input_size=2, label_size=1):
+def loadDataFromTextFile(filePath, numberOfData=-1, inputSize=2, labelSize=1):
     """
     Load a dataset from a CSV text file and split it into input features and labels.
 
@@ -11,11 +11,11 @@ def load_data_from_text_file(file_path, number_of_data=-1, input_size=2, label_s
     parts: one for input features and one for labels, based on the provided column sizes.
 
     Args:
-        file_path (str): The path to the CSV file containing the dataset.
-        number_of_data (int, optional): The maximum number of data rows to load. If set to -1 (default),
+        filePath (str): The path to the CSV file containing the dataset.
+        numberOfData (int, optional): The maximum number of data rows to load. If set to -1 (default),
             all rows are loaded.
-        input_size (int, optional): The number of columns representing input features. Defaults to 2.
-        label_size (int, optional): The number of columns representing labels. Defaults to 1.
+        inputSize (int, optional): The number of columns representing input features. Defaults to 2.
+        labelSize (int, optional): The number of columns representing labels. Defaults to 1.
 
     Returns:
         tuple: A tuple containing two numpy arrays:
@@ -23,25 +23,25 @@ def load_data_from_text_file(file_path, number_of_data=-1, input_size=2, label_s
             - np.ndarray: The array of labels.
 
     Example:
-        >>> inputs, labels = load_data_from_text_file("data.csv", number_of_data=100, input_size=3, label_size=1)
+        >>> inputs, labels = loadDataFromTextFile("data.csv", numberOfData=100, inputSize=3, labelSize=1)
         >>> print(inputs.shape, labels.shape)
     """
-    print(f"\nLoading dataset from file \"{file_path}\"")
-    data = pd.read_csv(file_path, header=None)
+    print(f"\nLoading dataset from file \"{filePath}\"")
+    data = pd.read_csv(filePath, header=None)
 
-    if number_of_data != -1:
-        data = data.iloc[:number_of_data]
+    if numberOfData != -1:
+        data = data.iloc[:numberOfData]
 
     data = data.values
 
-    input_data = data[:, :input_size]
-    labels = data[:, input_size:input_size + label_size]
+    inputData = data[:, :inputSize]
+    labels = data[:, inputSize:inputSize + labelSize]
     
     print("Dataset loaded.")
-    return np.array(input_data), np.array(labels)
+    return np.array(inputData), np.array(labels)
 
 
-def generate_example_dataset(number_of_data):
+def generateExampleDataset(numberOfData):
     """
     Generate an example XOR dataset.
 
@@ -51,32 +51,32 @@ def generate_example_dataset(number_of_data):
     corresponding XOR results.
 
     Args:
-        number_of_data (int): The number of data samples to generate.
+        numberOfData (int): The number of data samples to generate.
 
     Returns:
         tuple: A tuple containing two elements:
-            - input_data (list of list of int): A list where each element is a list of two binary integers,
+            - inputData (list of list of int): A list where each element is a list of two binary integers,
               representing the input pair (e.g., [0, 1]).
             - labels (list of int): A list of integers (0 or 1) representing the XOR result for each input pair.
 
     Example:
-        >>> inputs, labels = generate_example_dataset(4)
+        >>> inputs, labels = generateExampleDataset(4)
         >>> print(inputs)
         [[0, 1], [1, 0], [0, 0], [1, 1]]
         >>> print(labels)
         [1, 1, 0, 0]
     """
-    input_data = []
+    inputData = []
     labels = []
 
-    for _ in range(number_of_data):
-        x_random = randint(0, 1)
-        y_random = randint(0, 1)
+    for _ in range(numberOfData):
+        xRandom = randint(0, 1)
+        yRandom = randint(0, 1)
 
-        random_data = [x_random, y_random]
-        result = x_random ^ y_random
+        randomData = [xRandom, yRandom]
+        result = xRandom ^ yRandom
         
-        input_data.append(random_data)
+        inputData.append(randomData)
         labels.append(result)
 
-    return input_data, labels
+    return inputData, labels

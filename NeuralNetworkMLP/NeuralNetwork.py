@@ -86,6 +86,9 @@ class NeuralNetwork:
             >>> # This will raise a ValueError if activation_functions length does not match hidden layers + output.
             >>> nn = NeuralNetwork(2, [3, 4], 1, activation_functions=[RELU, SIGMOID])
         """
+        if model_file is not None:
+            return
+
         if all(param is None for param in [input_layer_neurons, hidden_layers_neurons, output_layer_neurons, model_file, activation_functions]):
             raise ValueError(
                 "Initialization Error: All parameters are None. You must provide either a model_file "

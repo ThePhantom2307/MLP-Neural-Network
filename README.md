@@ -1,4 +1,3 @@
-
 # MLP Neural Network
 
 MLP Neural Network is a lightweight Python library for building and training Multi-Layer Perceptron (MLP) models. This repository provides a simple yet powerful framework for experimenting with neural networks, along with an example program and dataset to help you get started quickly.

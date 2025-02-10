@@ -49,33 +49,37 @@ You can incorporate the MLP Neural Network library into your own projects. Below
 ```python
 # Import the neural network class
 import NeuralNetworkMLP as nn
+import numpy as np
 
 # Load or create the datasets
-X_train = [[0, 1],
+X_train = np.array([[0, 1],
            [1, 0],
            [1, 1],
-           [0, 0]]
+           [0, 0]])
 
-y_train = [[0], [1], [0]]
+y_train = np.array([[1], [1], [0], [0]])
 
-X_test = [[1, 0]]
+X_test = np.array([[1, 0]])
 
 # Define your network architecture: for example, input layer of size 2, one hidden layer with 10 neurons, and output layer of size 1.
-neuralNetwork = nn.NeuralNetwork(
-        inputLayerNeurons=2,
-        hiddenLayersNeurons=[10],
-        outputLayerNeurons=1,
-        activationFunctions=[nn.RELU, nn.SIGMOID]
+neural_network = nn.NeuralNetwork(
+        input_layer_neurons=2,
+        hidden_layers_neurons=[10],
+        output_layer_neurons=1,
+        activation_functions=[nn.RELU, nn.SIGMOID]
     )
 
 # Train the model on your training data (X_train and y_train should be defined appropriately)
-neuralNetwork.train(X_train, y_train)
+neural_network.train(X_train, y_train)
 
 # Predict on new data
-predictions = neuralNetwork.predict(X_test)
+predictions = neural_network.predict(X_test)
 
 # Save the model
-neuralNetwork.save_model("NeuralNetworkModel.json")
+neural_network.save_model("NeuralNetworkModel.json")
+
+# Load the model
+neural_network.load_model("NeuralNetworkModel.json")
 ```
 For more detailed usage, refer to the test.py file, which provides a complete example.
 

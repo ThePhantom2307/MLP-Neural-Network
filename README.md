@@ -15,19 +15,18 @@ MLP Neural Network is a lightweight Python library for building and training Mul
 
 * Python 3.x is required.
 * NumPy library is required.
+* Pandas library is required.
 * Json (built-in) library is required.
 
-Install NumPy python library by using the below.
+Install NumPy and Pandas python library by using the below.
 ```
 pip install numpy
+pip install pandas
 ```
 
 ## Installation
-
-Clone the repository to your local machine:
 ```
-git clone https://github.com/ThePhantom2307/MLP-Neural-Network.git
-cd MLP-Neural-Network
+pip install NeuralNetworkMLP
 ```
 
 ## Running the Example
@@ -41,7 +40,7 @@ You can incorporate the MLP Neural Network library into your own projects. Below
 
 ```python
 # Import the neural network class
-import tools
+import NeuralNetworkMLP as nn
 
 # Load or create the datasets
 X_train = [[0, 1],
@@ -54,11 +53,11 @@ y_train = [[0], [1], [0]]
 X_test = [[1, 0]]
 
 # Define your network architecture: for example, input layer of size 2, one hidden layer with 10 neurons, and output layer of size 1.
-neuralNetwork = tools.NeuralNetwork(
+neuralNetwork = nn.NeuralNetwork(
         inputLayerNeurons=2,
         hiddenLayersNeurons=[10],
         outputLayerNeurons=1,
-        activationFunctions=[tools.RELU, tools.SIGMOID]
+        activationFunctions=[nn.RELU, nn.SIGMOID]
     )
 
 # Train the model on your training data (X_train and y_train should be defined appropriately)

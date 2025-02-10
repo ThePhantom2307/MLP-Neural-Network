@@ -61,8 +61,8 @@ y_train = np.array([[1], [1], [0], [0]])
 
 X_test = np.array([[1, 0]])
 
-# Define your network architecture: for example, input layer of size 2, one hidden layer with 10 neurons,
-# and output layer of size 1.
+# Define your network architecture: for example, input layer of size 2,
+# one hidden layer with 10 neurons, and output layer of size 1.
 neural_network = nn.NeuralNetwork(
         input_layer_neurons=2,
         hidden_layers_neurons=[10],

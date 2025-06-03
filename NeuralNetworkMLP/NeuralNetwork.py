@@ -52,7 +52,7 @@ class NeuralNetwork:
             self.activationFunctions = activationFunctions
 
             self.epochs = 500
-            self.batch_size = 32
+            self.batchSize = 32
             self.learningRate = 0.0001
             self.threshold = 1e-6
 
@@ -207,8 +207,8 @@ class NeuralNetwork:
             totalEpochLoss = 0.0
             numberBatches = 0
 
-            for batchStart in range(0, numberSamples, self.batch_size):
-                batchEnd = batchStart + self.batch_size
+            for batchStart in range(0, numberSamples, self.batchSize):
+                batchEnd = batchStart + self.batchSize
                 batchData = trainingDataShuffled[batchStart:batchEnd]
                 batchLabels = trainingLabelsShuffled[batchStart:batchEnd]
 

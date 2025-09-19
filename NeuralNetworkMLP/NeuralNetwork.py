@@ -6,6 +6,7 @@ from NeuralNetworkMLP.Plot import errorPlotOverEpochs
 TANH = "tanh"
 RELU = "relu"
 SIGMOID = "sigmoid"
+SOFTMAX = "softmax"
 
 class NeuralNetwork:
     """
@@ -111,7 +112,7 @@ class NeuralNetwork:
         Construct the layers using the specified architecture.
 
         Example:
-            >>> nn._initializeLayers()
+            >>> nn.__initializeLayers()
         """
         self.layers = []
         prevNeurons = self.inputLayerNeurons
@@ -165,14 +166,19 @@ class NeuralNetwork:
             >>> # Suppose activations and preActivations were obtained via feedForward
             >>> nn.backPropagation(activations, preActivations, expectedOutput)
         """
-        output_error = activations[-1] - expectedOutput
-        delta = output_error * self.layers[-1].activationDerivative(preActivations[-1])
+        outputError = activations[-1] - expectedOutput
+        lastActivationDerivative = self.layers[-1].activationDerivative(preActivations[-1])
+        
+        if lastActivationDerivative.ndim == 3:
+            delta = np.einsum('ij,ijk->ik', outputError, lastActivationDerivative)
+        else:
+            delta = outputError * lastActivationDerivative
         deltas = [delta]
 
         for i in reversed(range(len(self.layers) - 1)):
             layer = self.layers[i]
-            next_layer = self.layers[i + 1]
-            delta = deltas[0].dot(next_layer.weights.T) * layer.activationDerivative(preActivations[i])
+            nextLayer = self.layers[i + 1]
+            delta = deltas[0].dot(nextLayer.weights.T) * layer.activationDerivative(preActivations[i])
             deltas.insert(0, delta)
 
         for i, layer in enumerate(self.layers):
@@ -196,6 +202,7 @@ class NeuralNetwork:
             >>> trainingLabels = np.array([[0], [1], [1], [0]])
             >>> nn.train(trainingData, trainingLabels)
         """
+        print("Start training the neural network.")
         allErrors = []
         numberSamples = trainingData.shape[0]
         for epoch in range(self.epochs):
@@ -234,29 +241,27 @@ class NeuralNetwork:
         print("Training completed.")
 
     def evaluation(self, testingData, testingLabels):
-        """
-        Evaluate the network's performance on test data.
-
-        Args:
-            testingData (np.array): Test input data.
-            testingLabels (np.array): True output labels.
-
-        Example:
-            >>> import numpy as np
-            >>> testingData = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-            >>> testingLabels = np.array([[0], [1], [1], [0]])
-            >>> nn.evaluation(testingData, testingLabels)
-        """
         predictions = []
         for i in range(testingData.shape[0]):
             sample = testingData[i].reshape(1, -1)
             activations, _ = self.feedForward(sample)
             output = activations[-1]
-            predictedLabel = 1 if output[0, 0] > 0.5 else 0
+
+            if self.outputLayerNeurons == 1:
+                predictedLabel = 1 if output[0, 0] > 0.5 else 0
+            else:
+                predictedLabel = np.argmax(output, axis=1)[0]
+
             predictions.append(predictedLabel)
 
         predictions = np.array(predictions)
-        accuracy = np.mean(predictions == testingLabels.flatten()) * 100
+
+        if testingLabels.ndim > 1 and testingLabels.shape[1] > 1:
+            expectedLabels = np.argmax(testingLabels, axis=1)
+        else:
+            expectedLabels = testingLabels.flatten()
+
+        accuracy = np.mean(predictions == expectedLabels) * 100
         print(f"\nEvaluation completed with accuracy: {accuracy:.2f}%")
 
     def predict(self, inputData):
